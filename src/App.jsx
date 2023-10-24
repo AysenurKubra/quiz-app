@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import './App.css';
 import { PathCard } from './component/PathCard';
-import QuestionCard from './component/QuestionCard';
+import { LoveQuizQuestions } from './component/LoveQuizQuestions';
+import { CourageQuizQuestions } from './component/CourageQuizQuestions';
+import { WisdomQuizQuestions } from './component/WisdomQuizQuestions';
+import { QuestionCard } from './component/QuestionCard';
 
 function App() {
 
@@ -11,22 +14,40 @@ function App() {
     { id: 3, name: 'Love', title: 'This path is going through love castle', image: '/pictures/love.png'}
   ]);
 
-  const handleClick = () => {
-    return
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [questions, setQuestions] = useState([]);
+
+  const handleClick = (category) => {
+    setSelectedCategory(category);
+
+    switch (category) {
+      case 'Wisdom':
+        setQuestions(WisdomQuizQuestions);
+        break;
+      case 'Courage':
+        setQuestions(CourageQuizQuestions);
+        break;
+      case 'Love':
+        setQuestions(LoveQuizQuestions);
+        break;
+      default:
+        setQuestions([]);
+    }
   }
 
   return (
     <div className="container">
-      <QuestionCard />
-    {/* {
+    {
       data.map(pathCard => 
       <PathCard 
+      key={pathCard.id}
         id={pathCard.id} 
         title={pathCard.title} 
         name={pathCard.name} 
         handleClick={handleClick}
         image={process.env.PUBLIC_URL + pathCard.image} />)
-    } */}
+    }
+    {selectedCategory && questions.length > 0 && <QuestionCard questions={questions} />}
     </div>
   );
 }
