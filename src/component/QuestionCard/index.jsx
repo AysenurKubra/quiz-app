@@ -24,7 +24,7 @@ export const QuestionCard = ({ questions }) => {
     event.preventDefault();
 
     if (value === "") {
-      setHelperText("You can skip the question...");
+      setHelperText("You cannot skip the question...");
       setError(true);
     } else {
       if (currentQuestionIndex < questions.length - 1) {
