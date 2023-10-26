@@ -1,7 +1,18 @@
-.container {
+.intro {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px 150px;
+    
+}
+.path-cards {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 170px;
-    margin: 10px;
+    padding: 100px;
+    
 }
+
+
+  

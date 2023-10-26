@@ -6,6 +6,7 @@ import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
+import './styles.css';
 
 export const QuestionCard = ({ questions }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
@@ -38,8 +39,8 @@ export const QuestionCard = ({ questions }) => {
   const currentQuestion = questions[currentQuestionIndex];
 
   return (
-    <form onSubmit={handleSubmit}>
-      <FormControl sx={{ m: 3 }} error={error} variant="standard">
+    <form onSubmit={handleSubmit} className="question-card">
+      <FormControl sx={{ m: 3 }} error={error} variant="standard" >
         <FormLabel id="demo-error-radios">{currentQuestion.question}</FormLabel>
         <RadioGroup
           aria-labelledby="demo-error-radios"
