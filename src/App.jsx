@@ -7,6 +7,8 @@ import { WisdomQuizQuestions } from "./component/WisdomQuizQuestions";
 import { QuestionCard } from "./component/QuestionCard";
 import { Timer } from "./component/Timer";
 import { IntroCard } from "./component/IntroCard";
+import { LogIn } from "./component/LogIn";
+import { ResultPage } from "./component/ResultPage";
 
 function App() {
   const [data, setData] = useState([
@@ -36,6 +38,7 @@ function App() {
     },
   ]);
 
+  const [logIn, setLogIn] = useState(true);
   const [showIntro, setShowIntro] = useState(true);
   const [showCategories, setShowCategories] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -50,7 +53,8 @@ function App() {
   const [value, setValue] = useState("");
   const [error, setError] = useState(false);
   const [helperText, setHelperText] = useState("Choose wisely");
-  const [quizFinished, setQuizFinished] = useState(false)
+  const [quizFinished, setQuizFinished] = useState(false);
+  const [resultPage, setResultPage] = useState(false); 
 
   useEffect(() => {
     let timerInterval;
@@ -72,6 +76,10 @@ function App() {
       clearInterval(timerInterval);
     };
   }, [showTimer, timerStarted]);
+
+  const handleLogIn = () => {
+    setLogIn(false);
+  }
 
   const handleClick = (id) => {
     const selectedPath = data.find((pathCard) => pathCard.id === id);
@@ -120,18 +128,21 @@ function App() {
       setHelperText("Choose wisely");
       setError(false);
     } else {
-      setQuizFinished(true);
+      setResultPage(true);
     }
   };
 
   return (
     <div className="app-container">
-      <div className="timer">
-        {showTimer && remainingTime > 0 && `${remainingTime}`}
+      <div className="log-in">
+        {logIn && <LogIn handleLogIn={handleLogIn} />}
       </div>
-      <div className="intro">{showIntro && <IntroCard />}</div>
+      <div className="timer">
+        {!logIn && showTimer && remainingTime > 0 && `${remainingTime}`}
+      </div>
+      <div className="intro">{!logIn && showIntro && <IntroCard />}</div>
       <div className="path-cards">
-        {showCategories &&
+        {!logIn && showCategories &&
           data.map((pathCard) => (
             <PathCard
               key={pathCard.id}
@@ -142,7 +153,7 @@ function App() {
               image={process.env.PUBLIC_URL + pathCard.image}
             />
           ))}
-        {!showCategories && selectedCategory && questions.length > 0 && (
+        {!logIn && !showCategories && selectedCategory && questions.length > 0 && (
           <QuestionCard
             questions={questions}
             totalQuestions={questions.length}
@@ -157,13 +168,9 @@ function App() {
           />
         )}
       </div>
-      {quizFinished && (
-  <div>
-    <p>Doğru Cevaplar: {correctAnswers}</p>
-    <p>Yanlış Cevaplar: {wrongAnswers}</p>
-    <p>Cevaplanmamış Sorular: {unansweredQuestions}</p>
-  </div>
-)}
+      <div className="result-page">
+        {!logIn && !showCategories && !selectedCategory && resultPage && <ResultPage wrongAnswers={wrongAnswers} correctAnswers={correctAnswers} />}
+      </div>
     </div>
   );
 }
