@@ -1,18 +1,18 @@
-.intro {
-    margin-left: 60px;
-}
-.path-cards {
-    display: flex;
-    justify-content: space-between;
+.app-container {
+    margin-top: 20px;
+    display:flex;
+    flex-direction: column;
     align-items: center;
-    padding: 100px;    
+    justify-content: center;
+    min-height: 100vh;
 }
 
-.log-in {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.path-cards__container {
     margin: 30px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
 }
+
 
   

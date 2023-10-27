@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 
 
 export const ResultPage = ({ correctAnswers, totalQuestions }) => {
-    const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+    const percentage = Math.round((correctAnswers / totalQuestions.length) * 100);
 
     let message;
   if (percentage === 100) {
@@ -25,7 +25,7 @@ export const ResultPage = ({ correctAnswers, totalQuestions }) => {
         Quiz Results
         </Typography>
         <Typography variant="body2">
-        You got {correctAnswers} out of {totalQuestions} questions right!
+        You got {correctAnswers} out of {totalQuestions.length} questions right!
           <br />
         </Typography>
         <Typography variant="body2">
