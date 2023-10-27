@@ -24,7 +24,7 @@ export const PathCard = ({id, handleClick, title, name, image}) => {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => {handleClick(id); console.log('clicked!!!!!')}}>I want this path</Button>
+        <Button size="small" onClick={() => handleClick(id)}>I want this path</Button>
       </CardActions>
     </Card>
   );

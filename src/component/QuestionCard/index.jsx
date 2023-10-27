@@ -8,52 +8,57 @@ import FormLabel from "@mui/material/FormLabel";
 import Button from "@mui/material/Button";
 import './styles.css';
 
-export const QuestionCard = ({ questions }) => {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = React.useState(0);
-  const [value, setValue] = React.useState("");
+export const QuestionCard = ({ questions, currentQuestionIndex, handleSubmit }) => {
+  const [value, setValue] = React.useState(undefined);
   const [error, setError] = React.useState(false);
   const [helperText, setHelperText] = React.useState("Choose wisely");
 
-  const handleRadioChange = (event) => {
-    setValue(event.target.value);
-    setHelperText(" ");
-    setError(false);
-  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  // const handleRadioChange = (event) => {
+  //   setValue(event.target.value);
+  //   setHelperText(" ");
+  //   setError(false);
+  // };
 
-    if (value === "") {
-      setHelperText("You cannot skip the question...");
-      setError(true);
-    } else {
-      if (currentQuestionIndex < questions.length - 1) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setValue("");
-        setHelperText("Choose wisely");
-        setError(false);
-      }
-    }
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+
+  //   if (value === "") {
+  //     setHelperText("You cannot skip the question...");
+  //     setError(true);
+  //   } else {
+  //     if (currentQuestionIndex < questions.length - 1) {
+  //       setCurrentQuestionIndex(currentQuestionIndex + 1);
+  //       setValue("");
+  //       setHelperText("Choose wisely");
+  //       setError(false);
+  //     }
+  //   }
+  // };
 
   const currentQuestion = questions[currentQuestionIndex];
+  function onSubmit(event) {
+    event.preventDefault();
+    handleSubmit(value);
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="question-card">
+    <form onSubmit={onSubmit} className="question-card">
       <FormControl sx={{ m: 3 }} error={error} variant="standard" >
         <FormLabel id="demo-error-radios">{currentQuestion.question}</FormLabel>
         <RadioGroup
           aria-labelledby="demo-error-radios"
           name="quiz"
-          value={value}
-          onChange={handleRadioChange}
+          required
+          // onChange={handleRadioChange}
         >
-          {currentQuestion.options.map((option, index) => (
+          {currentQuestion.options.map((option) => (
             <FormControlLabel
-              key={index}
+              key={option.trim().toLowerCase()}
               value={option}
               control={<Radio />}
               label={option}
+              onChange={(event => setValue(event.target.value))}
             />
           ))}
         </RadioGroup>
